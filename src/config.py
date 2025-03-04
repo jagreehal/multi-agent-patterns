@@ -3,7 +3,7 @@ Configuration for LLM models and other settings.
 """
 
 import os
-from typing import Union
+from typing import Literal, Union
 
 import dotenv
 from pydantic_ai.models import Model
@@ -12,8 +12,11 @@ from pydantic_ai.models.openai import OpenAIModel
 # Load environment variables
 dotenv.load_dotenv()
 
+# Model type for type checking
+ModelType = Literal["groq:llama-3.3-70b-versatile"]
+
 # Default model configuration
-DEFAULT_MODEL: Union[str, Model] = "groq:llama-3.3-70b-versatile"
+DEFAULT_MODEL: ModelType = "groq:llama-3.3-70b-versatile"
 
 # Alternative model configurations
 TOGETHER_MODEL: Model = OpenAIModel(
@@ -29,5 +32,4 @@ OPENROUTER_MODEL: Model = OpenAIModel(
 )
 
 # Model to use across the application
-# Change this to switch between different models
-ACTIVE_MODEL: Union[str, Model] = DEFAULT_MODEL
+ACTIVE_MODEL: ModelType = DEFAULT_MODEL
