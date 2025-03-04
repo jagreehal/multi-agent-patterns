@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Get the current working directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$(dirname "$DIR")"
+
+echo "Running pre-push checks..."
+
+# Run format check
+echo "\n🔍 Running format check..."
+make format
+
+# Check if there are any unstaged changes after formatting
+if ! git diff --quiet; then
+    echo "❌ Error: Code formatting resulted in changes."
+    echo "Please stage and commit the following changes:"
+    git diff --name-only
+    exit 1
+fi
+
+# Run type check
+echo "\n🔍 Running type check..."
+if ! make type-check; then
+    echo "❌ Error: Type check failed."
+    echo "Please fix the type errors before pushing."
+    exit 1
+fi
+
+# Run linter
+echo "\n🔍 Running linter..."
+if ! make lint; then
+    echo "❌ Error: Linting failed."
+    echo "Please fix the linting errors before pushing."
+    exit 1
+fi
+
+# Run tests
+echo "\n🔍 Running tests..."
+if ! make test; then
+    echo "❌ Error: Tests failed."
+    echo "Please fix the failing tests before pushing."
+    exit 1
+fi
+
+echo "\n✅ All checks passed! Proceeding with push."
+exit 0 

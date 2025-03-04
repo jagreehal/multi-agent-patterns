@@ -1,0 +1,16 @@
+{
+  "python.testing.pytestArgs": ["src"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "notebook.output.textLineWrapping": true,
+  "python.linting.enabled": true,
+  "python.linting.ruffEnabled": true,
+  "python.linting.lintOnSave": true,
+  "python.formatting.provider": "ruff",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
+  },
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyArgs": ["--ignore-missing-imports", "--show-error-codes"]
+}
